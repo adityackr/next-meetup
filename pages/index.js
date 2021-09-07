@@ -18,14 +18,28 @@ const DUMMY_MEETUPS = [
     },
 ];
 
-const HomePage = () => {
-    const [loadedMeetups, setLoadedMeetups] = useState([]);
+const HomePage = (props) => {
+    return <MeetupList meetups={props.meetups} />;
+};
 
-    useEffect(() => {
-        setLoadedMeetups(DUMMY_MEETUPS);
-    }, []);
+// export const getServerSideProps = (context) => {
+//     const req = context.req;
+//     const res = context.res;
 
-    return <MeetupList meetups={loadedMeetups} />;
+//     return {
+//         props: {
+//             meetups: DUMMY_MEETUPS,
+//         },
+//     };
+// };
+
+export const getStaticProps = async () => {
+    return {
+        props: {
+            meetups: DUMMY_MEETUPS,
+        },
+        revalidate: 10,
+    };
 };
 
 export default HomePage;
